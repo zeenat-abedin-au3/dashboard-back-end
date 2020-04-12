@@ -2,6 +2,8 @@ const express = require("express");
 
 const app = express();
 
+const userRouter = require("./routes/user");
+
 // Express middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -9,9 +11,7 @@ app.use(express.urlencoded({ extended: false }));
 // Requiring db
 const connectDB = require("./config/db");
 
-app.get("/", (req, res) => {
-  res.send("Hello pagli");
-});
+app.use("/user", userRouter);
 
 // connect db
 connectDB();
