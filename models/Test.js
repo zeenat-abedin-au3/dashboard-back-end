@@ -31,4 +31,4 @@ const TestSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("User", TestSchema);
+module.exports = mongoose.model("Test", TestSchema);

@@ -3,6 +3,8 @@ const express = require("express");
 const app = express();
 
 const userRouter = require("./routes/user");
+const testRouter = require("./routes/test");
+
 const errorHandler = require("./middlewares/error");
 
 // Express middleware
@@ -13,6 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 const connectDB = require("./config/db");
 
 app.use("/user", userRouter);
+app.use("/test", testRouter);
 
 // Error Middleware
 app.use(errorHandler);
