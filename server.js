@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 
 const app = express();
 
@@ -10,6 +11,9 @@ const errorHandler = require("./middlewares/error");
 // Express middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// add cors
+app.use(cors());
 
 // Requiring db
 const connectDB = require("./config/db");

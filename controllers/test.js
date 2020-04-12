@@ -22,7 +22,6 @@ exports.tests = asyncHandler(async (req, res) => {
   const tests = await Test.find({ user: id }).select(
     "_id testName numQuestions marks testTime user"
   );
-  console.log(tests);
 
   return res.status(200).json({
     success: true,
