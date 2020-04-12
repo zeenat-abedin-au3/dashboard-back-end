@@ -19,11 +19,25 @@ exports.createTest = asyncHandler(async (req, res) => {
 exports.tests = asyncHandler(async (req, res) => {
   const id = req.user.id;
 
-  const tests = await Test.find({ user: id });
+  const tests = await Test.find({ user: id }).select(
+    "_id testName numQuestions marks testTime user"
+  );
   console.log(tests);
 
   return res.status(200).json({
     success: true,
     data: tests,
+  });
+});
+
+exports.test = asyncHandler(async (req, res) => {
+  const id = req.user.id;
+  const { testId } = req.params;
+
+  const test = await Test.findOne({ user: id, _id: testId });
+
+  return res.status(200).json({
+    success: true,
+    data: test,
   });
 });
