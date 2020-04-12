@@ -34,16 +34,13 @@ exports.signup = asyncHandler(async (req, res) => {
   });
 });
 
-exports.login = asyncHandler(async (req, res) => {
+exports.login = asyncHandler(async (req, res, next) => {
   const { email, password: userPassword } = req.body;
 
   // first check if the email is exists or nor
   const user = await User.findOne({ email });
   if (!user) {
-    return res.status(404).json({
-      success: false,
-      messsage: "User not found",
-    });
+    return next(new ErrorResponse("User not found", 404));
   }
   const { password, _id } = user;
 
@@ -51,10 +48,7 @@ exports.login = asyncHandler(async (req, res) => {
   const isPassword = await bcrypt.compare(userPassword, password);
 
   if (!isPassword) {
-    return res.status(401).json({
-      success: false,
-      messsage: "Invalid credentials",
-    });
+    return next(new ErrorResponse("Invalid credentials", 401));
   }
 
   // generate token
