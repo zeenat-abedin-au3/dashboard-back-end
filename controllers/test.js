@@ -15,3 +15,15 @@ exports.createTest = asyncHandler(async (req, res) => {
     message: "The test has been created successfully",
   });
 });
+
+exports.tests = asyncHandler(async (req, res) => {
+  const id = req.user.id;
+
+  const tests = await Test.find({ user: id });
+  console.log(tests);
+
+  return res.status(200).json({
+    success: true,
+    data: tests,
+  });
+});
