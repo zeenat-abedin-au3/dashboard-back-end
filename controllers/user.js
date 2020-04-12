@@ -33,3 +33,37 @@ exports.signup = asyncHandler(async (req, res) => {
     token,
   });
 });
+
+exports.login = asyncHandler(async (req, res) => {
+  const { email, password: userPassword } = req.body;
+
+  // first check if the email is exists or nor
+  const user = await User.findOne({ email });
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      messsage: "User not found",
+    });
+  }
+  const { password, _id } = user;
+
+  // check password
+  const isPassword = await bcrypt.compare(userPassword, password);
+
+  if (!isPassword) {
+    return res.status(401).json({
+      success: false,
+      messsage: "Invalid credentials",
+    });
+  }
+
+  // generate token
+  const token = await jwt.sign({ id: _id }, process.env.TOKEN_SECRET_KEY, {
+    expiresIn: "2d",
+  });
+
+  return res.status(200).json({
+    success: true,
+    token,
+  });
+});
