@@ -2,6 +2,10 @@ const express = require("express");
 
 const app = express();
 
+// Express middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 // Requiring db
 const connectDB = require("./config/db");
 
