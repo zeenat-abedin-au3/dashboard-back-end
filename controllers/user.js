@@ -31,6 +31,7 @@ exports.signup = asyncHandler(async (req, res) => {
   return res.status(201).json({
     success: true,
     token,
+    fullName,
   });
 });
 
@@ -42,7 +43,7 @@ exports.login = asyncHandler(async (req, res, next) => {
   if (!user) {
     return next(new ErrorResponse("User not found", 404));
   }
-  const { password, _id } = user;
+  const { password, _id, fullName } = user;
 
   // check password
   const isPassword = await bcrypt.compare(userPassword, password);
@@ -59,5 +60,6 @@ exports.login = asyncHandler(async (req, res, next) => {
   return res.status(200).json({
     success: true,
     token,
+    fullName,
   });
 });
